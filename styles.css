@@ -452,7 +452,7 @@ body.is-zooming .command-pin {
   justify-content: center;
   gap: clamp(2rem, 4.5vw, 4.8rem);
   height: 100%;
-  padding: 0 4vw;
+  padding: 3.5vh 4vw;
   overflow: visible;
 }
 
@@ -735,20 +735,31 @@ body.is-map-full .map-note.is-off {
   .command {
     flex-direction: column;
     justify-content: center;
-    gap: 2.2rem;
-    padding: 6vh 4vw 8vh;
+    gap: 1.6rem;
+    padding: max(3rem, 9svh) 6vw max(2rem, 6svh);
   }
 
   .laptop {
-    width: min(88vw, 62svh);
+    width: min(80vw, 40svh);
+    flex-shrink: 0;
   }
 
-  .command-copy {
+  .command-copy,
+  .feature.command-copy {
     flex-basis: auto;
-    max-width: 34rem;
+    width: auto;
+    max-width: 20rem;
     margin-bottom: 0;
-    margin-left: 0;
-    padding: 0 2vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 max(1.4rem, 7vw);
+  }
+
+  .command-copy p,
+  .feature.command-copy p {
+    max-width: 17rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -944,15 +955,26 @@ body.is-map-full .map-note.is-off {
     max-width: 2.8rem;
   }
 
-  .command-copy {
+  .command-copy,
+  .feature.command-copy {
+    width: auto;
+    max-width: 20rem;
+    padding: 0 max(1.4rem, 7vw);
     text-align: center;
   }
 
   .command-copy h2,
-  .command-copy p {
+  .command-copy p,
+  .feature.command-copy h2,
+  .feature.command-copy p {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+  }
+
+  .command-copy p,
+  .feature.command-copy p {
+    max-width: 17rem;
   }
 
   .command-copy h2 {
