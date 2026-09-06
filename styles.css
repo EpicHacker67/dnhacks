@@ -849,7 +849,7 @@ body.is-map-full .map-note.is-off {
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: auto auto;
     justify-items: center;
-    align-items: start;
+    align-items: stretch;
     column-gap: 0.75rem;
     row-gap: 1.85rem;
     min-height: 0;
@@ -875,10 +875,10 @@ body.is-map-full .map-note.is-off {
     display: block;
     grid-row: 2;
     grid-column: 2;
-    align-self: start;
+    align-self: stretch;
     width: 1px;
-    height: 4.2rem;
-    margin-top: 0.45rem;
+    height: 100%;
+    min-height: 100%;
     background: #111;
   }
 
@@ -917,12 +917,19 @@ body.is-map-full .map-note.is-off {
   }
 
   .relay-copy p,
-  .relay-copy-end p {
-    margin-top: 0.4rem;
+  .relay-copy-end p,
+  .relay-stats li {
+    margin-top: 0.35rem;
+    font-size: clamp(0.72rem, 3.2vw, 0.82rem);
+    line-height: 1.35;
   }
 
   .relay-stats {
-    margin-top: 0.45rem;
+    margin-top: 0.35rem;
+  }
+
+  .relay-stats li {
+    margin-top: 0.2rem;
   }
 
   .relay-handset {
