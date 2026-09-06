@@ -35,7 +35,7 @@ body {
 h1 {
   position: relative;
   display: inline-block;
-  padding: 0.07em 0.08em 0.04em 0.02em;
+  padding: 0.11em 0.05em 0.02em;
   color: #000;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: var(--hero-title);
@@ -49,7 +49,7 @@ h1 {
 
 .hero-frame {
   position: absolute;
-  inset: -0.04em -0.05em -0.01em -0.07em;
+  inset: -0.08em -0.06em 0.03em;
   pointer-events: none;
   background:
     linear-gradient(#000, #000) top left / 0.16em 0.018em no-repeat,
@@ -801,7 +801,6 @@ body.is-map-full .map-note.is-off {
   }
 
   h1 {
-    padding: 0;
     font-size: var(--hero-title);
     text-align: center;
   }
