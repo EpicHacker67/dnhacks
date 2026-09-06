@@ -54,9 +54,26 @@ export function initParticleText(canvas, options = {}) {
     return 1 - (1 - x) ** 3;
   }
 
+  function glyphBounds(metrics, fallbackSize) {
+    const w = (metrics.actualBoundingBoxLeft || 0) + (metrics.actualBoundingBoxRight || 0);
+    const h = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0);
+    return {
+      w: w || metrics.width || fallbackSize,
+      h: h || fallbackSize * 0.72,
+    };
+  }
+
+  function viewSize() {
+    const host = canvas.parentElement ?? canvas;
+    const hostW = host.clientWidth || host.getBoundingClientRect().width;
+    const hostH = host.clientHeight || host.getBoundingClientRect().height;
+    const nextW = Math.max(1, Math.round(hostW || canvas.clientWidth));
+    const nextH = Math.max(1, Math.round(hostH || canvas.clientHeight));
+    return { nextW, nextH };
+  }
+
   function sample() {
-    const nextW = Math.max(1, Math.round(canvas.clientWidth));
-    const nextH = Math.max(1, Math.round(canvas.clientHeight));
+    const { nextW, nextH } = viewSize();
     if (nextW < 8 || nextH < 8) {
       requestAnimationFrame(sample);
       return;
@@ -70,28 +87,37 @@ export function initParticleText(canvas, options = {}) {
     canvas.height = Math.floor(nextH * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+    const padX = nextW * (narrow ? 0.09 : 0.06);
+    const padY = nextH * (narrow ? 0.1 : 0.12);
+    const maxW = Math.max(24, nextW - padX * 2);
+    const maxH = Math.max(24, nextH - padY * 2);
+
     const off = document.createElement("canvas");
     off.width = nextW;
     off.height = nextH;
     const octx = off.getContext("2d", { willReadFrequently: true });
-    let size = narrow
-      ? Math.min(nextH * 0.22, nextW * 0.24)
-      : Math.min(nextH * 0.42, nextW * 0.18);
+    let size = narrow ? Math.min(maxH, maxW * 0.34) : Math.min(nextH * 0.42, nextW * 0.18);
     octx.font = `${fontWeight} ${size}px ${fontFamily}`;
-    const measured = octx.measureText(text).width;
-    const maxWidth = nextW * (narrow ? 0.86 : 0.88);
-    if (measured > maxWidth) {
-      size *= maxWidth / Math.max(measured, 1);
+    let metrics = octx.measureText(text);
+    let bounds = glyphBounds(metrics, size);
+    const fit = Math.min(maxW / Math.max(bounds.w, 1), maxH / Math.max(bounds.h, 1), 1);
+    if (fit < 0.999) {
+      size *= fit;
       octx.font = `${fontWeight} ${size}px ${fontFamily}`;
+      metrics = octx.measureText(text);
+      bounds = glyphBounds(metrics, size);
     }
+
     octx.fillStyle = "#000";
-    octx.textAlign = "center";
-    octx.textBaseline = "middle";
-    octx.fillText(text, nextW / 2, nextH / 2);
+    octx.textAlign = "left";
+    octx.textBaseline = "alphabetic";
+    const drawX = (nextW - bounds.w) / 2 + (metrics.actualBoundingBoxLeft || 0);
+    const drawY = (nextH - bounds.h) / 2 + (metrics.actualBoundingBoxAscent || size * 0.72);
+    octx.fillText(text, drawX, drawY);
 
     const data = octx.getImageData(0, 0, off.width, off.height).data;
     const next = [];
-    const step = Math.max(2, narrow ? Math.round(density * 0.8) : density);
+    const step = Math.max(narrow ? 6 : 3, Math.round(density * Math.min(1, size / 220)));
     const skip = narrow ? 0.08 : 0.16;
     const jitter = step * (narrow ? 0.28 : 0.7);
     dotSize = particleSize;
@@ -121,6 +147,38 @@ export function initParticleText(canvas, options = {}) {
         });
       }
     }
+
+    if (next.length) {
+      let minX = Infinity;
+      let minY = Infinity;
+      let maxX = -Infinity;
+      let maxY = -Infinity;
+      next.forEach((p) => {
+        minX = Math.min(minX, p.tx);
+        minY = Math.min(minY, p.ty);
+        maxX = Math.max(maxX, p.tx);
+        maxY = Math.max(maxY, p.ty);
+      });
+      const boxW = Math.max(1, maxX - minX);
+      const boxH = Math.max(1, maxY - minY);
+      const edge = dotSize * 1.5 + idleDrift + 2;
+      const fitW = Math.max(24, nextW - Math.max(padX, edge) * 2);
+      const fitH = Math.max(24, nextH - Math.max(padY, edge) * 2);
+      const scale = Math.min(fitW / boxW, fitH / boxH, 1);
+      const cx = (minX + maxX) / 2;
+      const cy = (minY + maxY) / 2;
+      next.forEach((p) => {
+        const ntx = (p.tx - cx) * scale + nextW / 2;
+        const nty = (p.ty - cy) * scale + nextH / 2;
+        p.sx += ntx - p.tx;
+        p.sy += nty - p.ty;
+        p.x += ntx - p.tx;
+        p.y += nty - p.ty;
+        p.tx = ntx;
+        p.ty = nty;
+      });
+    }
+
     particles = next;
     if (started) {
       startAt = performance.now();
