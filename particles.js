@@ -91,12 +91,10 @@ export function initParticleText(canvas, options = {}) {
 
     const data = octx.getImageData(0, 0, off.width, off.height).data;
     const next = [];
-    const step = narrow
-      ? Math.max(3, Math.round(size / 20))
-      : Math.max(2, density);
-    const skip = narrow ? 0.04 : 0.16;
+    const step = Math.max(2, narrow ? Math.round(density * 0.8) : density);
+    const skip = narrow ? 0.08 : 0.16;
     const jitter = step * (narrow ? 0.28 : 0.7);
-    dotSize = narrow ? Math.max(particleSize, step * 0.52) : particleSize;
+    dotSize = particleSize;
     for (let y = 0; y < off.height; y += step) {
       for (let x = 0; x < off.width; x += step) {
         if (data[(y * off.width + x) * 4 + 3] < 90) {
