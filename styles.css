@@ -270,6 +270,10 @@ h1 {
   text-align: left;
 }
 
+.relay-split {
+  display: none;
+}
+
 .relay-stats {
   margin-top: 0.85rem;
   list-style: none;
@@ -841,19 +845,53 @@ body.is-map-full .map-note.is-off {
   }
 
   .relay {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-items: start;
+    column-gap: 0.75rem;
+    row-gap: 1.85rem;
     min-height: 0;
-    gap: 0.7rem;
     padding: 0.7rem 6vw 1.1rem;
     text-align: center;
+  }
+
+  .relay-stage {
+    --handset-h: min(28vh, 12rem);
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    flex: 0 0 auto;
+    justify-content: center;
+  }
+
+  .relay-copy {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .relay-split {
+    display: block;
+    grid-row: 2;
+    grid-column: 2;
+    align-self: start;
+    width: 1px;
+    height: 4.2rem;
+    margin-top: 0.45rem;
+    background: #111;
+  }
+
+  .relay-copy-end {
+    grid-row: 2;
+    grid-column: 3;
   }
 
   .relay-copy,
   .relay-copy-end {
     flex-basis: auto;
-    max-width: 22rem;
+    max-width: none;
+    width: 100%;
     text-align: center;
   }
 
@@ -869,7 +907,7 @@ body.is-map-full .map-note.is-off {
 
   .relay-copy h2,
   .relay-copy-end h2 {
-    font-size: clamp(2rem, 10vw, 2.8rem);
+    font-size: clamp(1.35rem, 6.2vw, 1.85rem);
   }
 
   .relay-stats {
@@ -885,13 +923,6 @@ body.is-map-full .map-note.is-off {
 
   .relay-stats {
     margin-top: 0.45rem;
-  }
-
-  .relay-stage {
-    --handset-h: min(28vh, 12rem);
-    width: 100%;
-    flex: 0 0 auto;
-    justify-content: center;
   }
 
   .relay-handset {
