@@ -76,8 +76,8 @@ h1 {
 }
 
 .phone {
-  --phone-h: min(88svh, calc(92vw * 15 / 8));
-  --phone-w: calc(var(--phone-h) * 8 / 15);
+  --phone-h: min(88svh, calc(92vw * 19.5 / 9));
+  --phone-w: calc(var(--phone-h) * 9 / 19.5);
   --phone-radius: calc(var(--phone-w) * 0.13);
   position: absolute;
   top: 50vh;
@@ -86,6 +86,7 @@ h1 {
   z-index: 5;
   width: var(--phone-w);
   height: var(--phone-h);
+  overflow: visible;
   border-radius: var(--phone-radius);
   pointer-events: none;
   will-change: transform;
@@ -93,55 +94,57 @@ h1 {
 }
 
 .phone-btn {
-  --btn-w: clamp(0.14rem, calc(var(--phone-w) * 0.01), 0.22rem);
+  --btn-w: clamp(0.2rem, calc(var(--phone-w) * 0.013), 0.28rem);
   position: absolute;
   z-index: 1;
   width: var(--btn-w);
-  background:
-    linear-gradient(#6e6e6e, #2a2a2a 12%, #111 46%, #0a0a0a 78%, #2c2c2c);
+  background: linear-gradient(
+    #3f3f3f,
+    #1a1a1a 16%,
+    #0c0c0c 48%,
+    #070707 80%,
+    #262626
+  );
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.62),
-    inset 1px 0 0 rgba(255, 255, 255, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.7);
 }
 
 .phone-btn-silent,
 .phone-btn-vol-up,
 .phone-btn-vol-down {
-  left: calc(var(--btn-w) * -0.86);
-  border-radius: 0.07rem 0 0 0.07rem;
+  left: calc(var(--btn-w) * -0.46);
+  border-radius: 1px 0 0 1px;
 }
 
 .phone-btn-power {
-  right: calc(var(--btn-w) * -0.86);
-  border-radius: 0 0.07rem 0.07rem 0;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.62),
-    inset -1px 0 0 rgba(255, 255, 255, 0.2);
+  right: calc(var(--btn-w) * -0.46);
+  border-radius: 0 1px 1px 0;
 }
 
 .phone-btn-silent {
-  top: 16.4%;
-  height: 3.15%;
+  top: 16.2%;
+  height: 2.7%;
 }
 
 .phone-btn-vol-up {
-  top: 23.8%;
-  height: 6.15%;
+  top: 23.6%;
+  height: 5.8%;
 }
 
 .phone-btn-vol-down {
-  top: 31.6%;
-  height: 6.15%;
+  top: 30.6%;
+  height: 5.8%;
 }
 
 .phone-btn-power {
-  top: 25.2%;
-  height: 9.1%;
+  top: 25%;
+  height: 10.2%;
 }
 
 .phone-bezel {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 100%;
   padding: 0.2rem;
@@ -206,7 +209,7 @@ h1 {
 .feature {
   position: relative;
   z-index: 3;
-  max-width: min(40rem, calc(100vw - min(88svh, 92vw * 15 / 8) * 8 / 15 - 8vw));
+  max-width: min(40rem, calc(100vw - min(88svh, 92vw * 19.5 / 9) * 9 / 19.5 - 8vw));
   padding: 0 3.2vw;
   opacity: 0;
 }
@@ -285,60 +288,59 @@ h1 {
 }
 
 .relay-stage {
+  --handset-h: min(34vh, 16.5rem);
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
   min-width: 0;
+  overflow: visible;
 }
 
 .relay-handset {
   position: relative;
   flex: 0 0 auto;
-  height: min(34vh, 16.5rem);
+  width: calc(var(--handset-h) * 9 / 19.5);
+  height: var(--handset-h);
+  overflow: visible;
 }
 
 .relay-btn {
-  --btn-w: clamp(0.08rem, 2.1%, 0.13rem);
+  --btn-w: clamp(0.11rem, calc(var(--handset-h) * 0.012), 0.16rem);
   position: absolute;
   z-index: 1;
   width: var(--btn-w);
-  background:
-    linear-gradient(#6e6e6e, #2a2a2a 12%, #111 46%, #0a0a0a 78%, #2c2c2c);
+  background: linear-gradient(
+    #3f3f3f,
+    #1a1a1a 16%,
+    #0c0c0c 48%,
+    #070707 80%,
+    #262626
+  );
   box-shadow:
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -0.5px 0 rgba(0, 0, 0, 0.58),
-    inset 1px 0 0 rgba(255, 255, 255, 0.18);
-}
-
-.relay-btn-silent {
-  top: 16.4%;
-  left: calc(var(--btn-w) * -0.86);
-  height: 3.15%;
-  border-radius: 0.05rem 0 0 0.05rem;
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.65);
 }
 
 .relay-btn-vol {
-  top: 23.8%;
-  left: calc(var(--btn-w) * -0.86);
-  height: 12.4%;
-  border-radius: 0.05rem 0 0 0.05rem;
+  top: 23.6%;
+  left: calc(var(--btn-w) * -0.46);
+  height: 12.8%;
+  border-radius: 1px 0 0 1px;
 }
 
 .relay-btn-power {
-  top: 25.2%;
-  right: calc(var(--btn-w) * -0.86);
-  height: 9.1%;
-  border-radius: 0 0.05rem 0.05rem 0;
-  box-shadow:
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -0.5px 0 rgba(0, 0, 0, 0.58),
-    inset -1px 0 0 rgba(255, 255, 255, 0.18);
+  top: 25%;
+  right: calc(var(--btn-w) * -0.46);
+  height: 10.2%;
+  border-radius: 0 1px 1px 0;
 }
 
 .relay-bezel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
   height: 100%;
-  aspect-ratio: 9 / 19.5;
   padding: 0.28rem;
   border: 1px solid #1a1a1a;
   border-radius: clamp(0.55rem, 18%, 0.85rem);
@@ -362,7 +364,7 @@ h1 {
   align-items: center;
   justify-content: center;
   flex: 1 1 5.5rem;
-  height: min(34vh, 16.5rem);
+  height: var(--handset-h);
   min-width: 3.2rem;
   max-width: 7.5rem;
 }
@@ -755,7 +757,7 @@ body.is-map-full .map-note.is-off {
   .page {
     --phone-gutter: max(1.25rem, 6vw);
     --phone-w: calc(100vw - 2 * var(--phone-gutter));
-    --phone-h: calc(var(--phone-w) * 15 / 8);
+    --phone-h: calc(var(--phone-w) * 19.5 / 9);
     --phone-radius: calc(var(--phone-w) * 0.13);
     --phone-top: 32svh;
   }
@@ -797,7 +799,7 @@ body.is-map-full .map-note.is-off {
   .phone {
     --phone-gutter: max(1.25rem, 6vw);
     --phone-w: calc(100vw - 2 * var(--phone-gutter));
-    --phone-h: calc(var(--phone-w) * 15 / 8);
+    --phone-h: calc(var(--phone-w) * 19.5 / 9);
     --phone-radius: calc(var(--phone-w) * 0.13);
     top: var(--phone-top);
     right: auto;
@@ -814,9 +816,9 @@ body.is-map-full .map-note.is-off {
   }
 
   .next {
-    min-height: auto;
-    justify-content: center;
-    padding: 0 0 1.2rem;
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 0.15rem 0 0.35rem;
   }
 
   .feature {
@@ -840,10 +842,11 @@ body.is-map-full .map-note.is-off {
 
   .relay {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 2rem;
-    padding: 2.4rem 6vw 3.2rem;
+    min-height: 0;
+    gap: 0.7rem;
+    padding: 0.7rem 6vw 1.1rem;
     text-align: center;
   }
 
@@ -875,20 +878,32 @@ body.is-map-full .map-note.is-off {
     align-items: center;
   }
 
+  .relay-copy p,
+  .relay-copy-end p {
+    margin-top: 0.4rem;
+  }
+
+  .relay-stats {
+    margin-top: 0.45rem;
+  }
+
   .relay-stage {
+    --handset-h: min(28vh, 12rem);
     width: 100%;
+    flex: 0 0 auto;
     justify-content: center;
   }
 
   .relay-handset {
-    height: min(20vh, 8.8rem);
+    width: calc(var(--handset-h) * 9 / 19.5);
+    height: var(--handset-h);
   }
 
   .relay-link {
-    height: min(20vh, 8.8rem);
-    flex-basis: 2rem;
-    min-width: 1.6rem;
-    max-width: 3.4rem;
+    height: var(--handset-h);
+    flex-basis: 1.7rem;
+    min-width: 1.35rem;
+    max-width: 2.8rem;
   }
 
   .command-copy {
